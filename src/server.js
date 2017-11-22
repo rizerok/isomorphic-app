@@ -1,3 +1,6 @@
-import Koa from 'koa';
-const app = new Koa();
+import path from 'path';
+import Express from 'express';
+import React from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'reacr-redux';
 
