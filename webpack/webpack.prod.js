@@ -60,18 +60,18 @@ module.exports = {
                             localIdentName: '[hash:base64:8]'
                         }
                     },
-                        {
-                            loader: 'postcss-loader',
-                            options:{
-                                sourceMap: true
-                            }
-                        },
-                        {
-                            loader:'stylus-loader',
-                            options:{
-                                use:[rupture()]
-                            }
-                        }]
+                    {
+                        loader: 'postcss-loader',
+                        options:{
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader:'stylus-loader',
+                        options:{
+                            use:[rupture()]
+                        }
+                    }]
                 })
             }
         ]

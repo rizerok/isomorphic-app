@@ -1,11 +1,11 @@
-react-spa-client v0.0.1
+react-isomorphic-app v0.0.1
 ===================
 
 
 Install:
 -------------------
 ```sh
-git clone https://github.com/rizerok/react-spa-client.git .
+git clone https://github.com/rizerok/react-isomorphic-app.git .
 npm i
 ```
 
