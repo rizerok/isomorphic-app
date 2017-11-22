@@ -14,7 +14,7 @@ module.exports = {
     module:{
         rules:[
             {
-                test:/\.styl$/,
+                test:/\.scss$/,
                 exclude:path.resolve('assets','styles'),
                 use:extractStylus.extract({
                     fallback: 'style-loader',
@@ -35,15 +35,15 @@ module.exports = {
                         }
                     },
                     {
-                        loader:'stylus-loader',
+                        loader:'sass-loader',
                         options:{
-                            use:[rupture()]
+
                         }
                     }]
                 })
             },
             {
-                test:/\.styl$/,
+                test:/\.scss$/,
                 include:path.resolve('assets','styles'),
                 use:extractStylus.extract({
                     fallback: 'style-loader',
@@ -61,9 +61,9 @@ module.exports = {
                         }
                     },
                     {
-                        loader:'stylus-loader',
+                        loader:'sass-loader',
                         options:{
-                            use:[rupture()]
+
                         }
                     }]
                 })

@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry:{
-        app:path.resolve('app','index.js')
+        app:path.resolve('src','index.js')
     },
     output:{
         filename:path.join('bundle','[name].js'),
@@ -17,11 +17,11 @@ module.exports = {
         alias:{
             root:path.resolve(),
             bundle:path.resolve('bundle'),
-            app:path.resolve('app'),
-            components:path.resolve('app','components'),
-            styles:path.resolve('assets','styles'),
-            fonts:path.resolve('assets','fonts'),
-            img:path.resolve('assets','images')
+            src:path.resolve('src'),
+            components:path.resolve('src','components'),
+            styles:path.resolve('src','assets','styles'),
+            fonts:path.resolve('src','assets','fonts'),
+            img:path.resolve('src','assets','images')
         }
     },
     module:{
@@ -31,12 +31,12 @@ module.exports = {
                 test: /\.js$/,
                 use: 'eslint-loader',
                 include: [
-                    path.resolve('app')
+                    path.resolve('src')
                 ]
             },
             {
                 test:/\.js$/,
-                include:path.resolve('app'),
+                include:path.resolve('src'),
                 use:{
                     loader:'babel-loader',
                     options:{
