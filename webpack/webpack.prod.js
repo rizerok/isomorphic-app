@@ -11,11 +11,6 @@ let extractStylus = new ExtractTextPlugin({
 });
 
 module.exports = {
-    output:{
-        library:'lib',
-        libraryTarget:'umd',
-        libraryExport: 'default'
-    },
     module:{
         rules:[
             {

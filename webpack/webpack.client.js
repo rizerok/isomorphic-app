@@ -2,21 +2,22 @@ const path = require('path');
 const webpack = require('webpack');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+//const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    target:'web',
     entry:{
-        app:path.resolve('src','index.js')
+        app:path.resolve('src','client.js')
+        //TODO vendors
     },
     output:{
-        filename:path.join('bundle','[name].js'),
+        filename:path.join('public','[name].js'),
         publicPath:'/'
     },
     resolve:{
         alias:{
             root:path.resolve(),
-            bundle:path.resolve('bundle'),
+            public:path.resolve('public'),
             src:path.resolve('src'),
             components:path.resolve('src','components'),
             styles:path.resolve('src','assets','styles'),
@@ -46,7 +47,7 @@ module.exports = {
                             'stage-3'//https://babeljs.io/docs/plugins/preset-stage-3/
                         ],
                         plugins:[
-                            'transform-decorators-legacy'
+
                         ],
                         cacheDirectory:true
                     }
@@ -57,7 +58,7 @@ module.exports = {
                 use: {
                     loader: 'file-loader',
                     options: {
-                        name:path.join('bundle','images','[name].js')
+                        name:path.join('public','images','[name].js')
                     }
                 },
                 exclude: /node_modules/
@@ -67,33 +68,31 @@ module.exports = {
                 use: {
                     loader: 'file-loader',
                     options: {
-                        name:path.join('bundle','fonts','[name].js')
+                        name:path.join('public','fonts','[name].js')
                     }
                 }
-
             }
         ]
     },
-    devServer:{
-        port:3000,
-        open:true,
-        historyApiFallback: true
-    },
+    // devServer:{
+    //     port:3000,
+    //     open:true,
+    //     historyApiFallback: true
+    // },
     plugins:[
         new CleanWebpackPlugin(
             [
-                'bundle',
-                'index.html'
+                'public'
             ],
             {
                 root:     path.resolve(),
                 verbose:  true
             }
         ),
-        new HtmlWebpackPlugin({
-            inject:false,
-            template: path.resolve('templates','index.html.ejs'),
-            filename:'index.html'
-        })
+        // new HtmlWebpackPlugin({
+        //     inject:false,
+        //     template: path.resolve('templates','index.html.ejs'),
+        //     filename:'index.html'
+        // })
     ]
 };

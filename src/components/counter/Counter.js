@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {increment, decrement} from '../../modules/counter';
+import {bindActionCreators} from 'redux';
 
 class Counter extends Component {
     constructor(props) {
@@ -19,10 +22,10 @@ class Counter extends Component {
     }
 
     render() {
-        const { value, onIncrement, onDecrement } = this.props;
+        const {counter, onIncrement, onDecrement} = this.props;
         return (
             <p>
-                Clicked: {value} times
+                Clicked: {counter} times
                 {' '}
                 <button onClick={onIncrement}>
                     +
@@ -44,10 +47,15 @@ class Counter extends Component {
     }
 }
 
-Counter.propTypes = {
-    value: PropTypes.number.isRequired,
-    onIncrement: PropTypes.func.isRequired,
-    onDecrement: PropTypes.func.isRequired
-};
+// Counter.propTypes = {
+//   value: PropTypes.number.isRequired,
+//   onIncrement: PropTypes.func.isRequired,
+//   onDecrement: PropTypes.func.isRequired
+// };
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators({onIncrement: increment, onDecrement: decrement}, dispatch);
 
-export default Counter;
+export default connect(
+    state => state,
+    mapDispatchToProps
+)(Counter);

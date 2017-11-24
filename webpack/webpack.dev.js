@@ -1,9 +1,8 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const rupture = require('rupture');
 
 let extractStylus = new ExtractTextPlugin({
-    filename:path.join('bundle','[name].css')
+    filename:path.join('public','[name].css')
 });
 
 module.exports = {
