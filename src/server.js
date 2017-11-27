@@ -1,7 +1,10 @@
 import { SERVER_PORT } from './config';
 import ENV, { IS_DEV } from './utils/env';
-
+//node
 import path from 'path';
+import fs from 'fs';
+const manifest = JSON.parse(fs.readFileSync(path.resolve('manifest.json'), 'utf8'));
+
 //Koa
 import Koa from 'koa';
 import serve from 'koa-static';
@@ -84,16 +87,15 @@ function renderFullPage(html, preloadedState) {
     <html>
       <head>
         <title>Redux Universal Example</title>
-        <link rel="stylesheet" href="/app.css">
+        <link rel="stylesheet" href="${manifest['app.css']}">
       </head>
       <body>
         <div id="root">${html}</div>
         <script>
-          // WARNING: See the following for security issues around embedding JSON in HTML:
-          // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations
           window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\\u003c')}
         </script>
-        <script src="/app.js"></script>
+        <script src=${manifest['vendors.js']}></script>
+        <script src=${manifest['app.js']}></script>
       </body>
     </html>
     `;

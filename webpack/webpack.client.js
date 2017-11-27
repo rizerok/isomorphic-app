@@ -2,17 +2,24 @@ const path = require('path');
 const webpack = require('webpack');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-//const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 module.exports = {
     target:'web',
     entry:{
-        app:path.resolve('src','client.js')
-        //TODO vendors
-    },
-    output:{
-        filename:path.join('public','[name].js'),
-        publicPath:'/'
+        app:path.resolve('src','client.js'),
+        vendors:[
+            'react',
+            'react-dom',
+            'isomorphic-fetch',
+            'react-redux',
+            'react-router-config',
+            'react-router-dom',
+            'redux',
+            'redux-thunk',
+            'prop-types',
+            'classnames'
+        ]
     },
     resolve:{
         alias:{
@@ -74,11 +81,6 @@ module.exports = {
             }
         ]
     },
-    // devServer:{
-    //     port:3000,
-    //     open:true,
-    //     historyApiFallback: true
-    // },
     plugins:[
         new CleanWebpackPlugin(
             [
@@ -88,11 +90,6 @@ module.exports = {
                 root:     path.resolve(),
                 verbose:  true
             }
-        ),
-        // new HtmlWebpackPlugin({
-        //     inject:false,
-        //     template: path.resolve('templates','index.html.ejs'),
-        //     filename:'index.html'
-        // })
+        )
     ]
 };

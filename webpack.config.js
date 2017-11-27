@@ -34,7 +34,7 @@ const mergeConfig = {
             });
             return rules;
         }
-        if(key === 'plugins'){
+        if(key === 'plugins'){//remove ExtractTextPlugin from a
             if(
                 a.find(elA=>elA.constructor.name==='ExtractTextPlugin') &&
                 b.find(elB=>elB.constructor.name==='ExtractTextPlugin')
@@ -44,20 +44,20 @@ const mergeConfig = {
                 a.splice(idx,1);
             }
         }
-        // Fall back to default merging
         return undefined;
     },
     customizeObject(a, b, key) {
         if (key === 'entry') {
             return b;
         }
-        // Fall back to default merging
         return undefined;
     }
 };
 
 module.exports = function (env) {
-    const ENV = env || process.env.NODE_ENV;
+    console.log(process.env.NODE_ENV);
+    const ENV = env || process.env.NODE_ENV || 'development';
+
     let clientConfig;
     let serverConfig = require('./webpack/webpack.server.js');
 

@@ -1,22 +1,23 @@
 const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const pj = require(path.resolve('package.json'));
-const rupture = require('rupture');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
-let extractStylus = new ExtractTextPlugin({
-    filename:path.join('bundle','[name].css')
+let extractSASS = new ExtractTextPlugin({
+    filename:path.join('public','[chunkhash].css')
 });
 
 module.exports = {
+    output:{
+        filename:path.join('public','[chunkhash].js'),
+        publicPath:'/',
+    },
     module:{
         rules:[
             {
-                test: /\.styl$/,
+                test: /\.scss$/,
                 exclude:path.resolve('assets','styles'),
-                use: extractStylus.extract({
+                use: extractSASS.extract({
                     fallback: 'style-loader',
                     use: [{
                         loader: 'css-loader',
@@ -34,17 +35,17 @@ module.exports = {
                         }
                     },
                     {
-                        loader:'stylus-loader',
+                        loader:'sass-loader',
                         options:{
-                            use:[rupture()]
+
                         }
                     }]
                 })
             },
             {
-                test: /\.styl$/,
+                test: /\.scss$/,
                 include:path.resolve('assets','styles'),
-                use: extractStylus.extract({
+                use: extractSASS.extract({
                     fallback: 'style-loader',
                     use: [{
                         loader: 'css-loader',
@@ -62,9 +63,9 @@ module.exports = {
                         }
                     },
                     {
-                        loader:'stylus-loader',
+                        loader:'sass-loader',
                         options:{
-                            use:[rupture()]
+
                         }
                     }]
                 })
@@ -73,16 +74,8 @@ module.exports = {
     },
     devtool:'cheap-module-source-map',
     plugins:[
-        new HtmlWebpackPlugin({
-            inject:false,
-            template: path.resolve('templates','README.md.ejs'),
-            filename:path.resolve('README.md'),
-            info:{
-                name: pj.name,
-                version: pj.version,
-                description: pj.description,
-                repository:pj.repository.url
-            }
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('production')
         }),
         new webpack.optimize.UglifyJsPlugin({
             uglifyOptions:{
@@ -95,6 +88,18 @@ module.exports = {
                 }
             }
         }),
-        extractStylus
+        extractSASS,
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendors",
+            filename:path.join('public','[chunkhash].js'),
+            minChunks: Infinity,
+        }),
+        new ManifestPlugin({
+            map:({name,path,chunk})=>({
+                path:`/${chunk.renderedHash}${path.match(/\..*/)[0]}`,
+                name
+            })
+        })
+
     ]
 };

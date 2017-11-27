@@ -1,9 +1,7 @@
-import config from 'config';
-import dotenv from 'dotenv';
+require('dotenv').config();
 import env from './utils/env';
 import envs from './constants/envs';
-
-dotenv.config();
+import config from 'config';
 
 if(!envs[env]){
     throw Error(`unknown env ${env}`);

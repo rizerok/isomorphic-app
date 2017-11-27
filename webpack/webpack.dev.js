@@ -1,21 +1,24 @@
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
-let extractStylus = new ExtractTextPlugin({
+let extractSASS = new ExtractTextPlugin({
     filename:path.join('public','[name].css')
 });
 
 module.exports = {
-    devtool:'cheap-eval-source-map',
-    devServer:{
-        openPage:'',
+    output:{
+        filename:path.join('public','[name].js'),
+        publicPath:'/',
     },
+    devtool:'cheap-eval-source-map',
     module:{
         rules:[
             {
                 test:/\.scss$/,
-                exclude:path.resolve('assets','styles'),
-                use:extractStylus.extract({
+                exclude:path.resolve('src','assets','styles'),
+                use:extractSASS.extract({
                     fallback: 'style-loader',
                     use:[{
                         loader: 'css-loader',
@@ -43,8 +46,8 @@ module.exports = {
             },
             {
                 test:/\.scss$/,
-                include:path.resolve('assets','styles'),
-                use:extractStylus.extract({
+                include:path.resolve('src','assets','styles'),
+                use:extractSASS.extract({
                     fallback: 'style-loader',
                     use:[{
                         loader: 'css-loader',
@@ -70,6 +73,17 @@ module.exports = {
         ]
     },
     plugins:[
-        extractStylus
+        extractSASS,
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendors",
+            filename:path.join('public','vendors.js'),
+            minChunks: Infinity,
+        }),
+        new ManifestPlugin({
+            map:({name,path,chunk})=>({
+                path:`/${name}`,
+                name
+            })
+        })
     ]
 };
