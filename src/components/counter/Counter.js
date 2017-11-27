@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {increment, decrement} from '../../modules/counter';
 import {bindActionCreators} from 'redux';
+import { Link } from 'react-router-dom';
 
 class Counter extends Component {
     constructor(props) {
@@ -25,6 +26,7 @@ class Counter extends Component {
         const {counter, onIncrement, onDecrement} = this.props;
         return (
             <p>
+                <Link to="/list">List!</Link>
                 Clicked: {counter} times
                 {' '}
                 <button onClick={onIncrement}>

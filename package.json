@@ -14,7 +14,6 @@
     "babel-preset-stage-3": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.7",
-    "dotenv": "^4.0.0",
     "enzyme": "^2.8.2",
     "eslint": "^4.11.0",
     "eslint-loader": "^1.9.0",
@@ -28,7 +27,8 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.8.1",
-    "webpack-merge": "^4.1.1"
+    "webpack-merge": "^4.1.1",
+    "webpack-node-externals": "^1.6.0"
   },
   "browserslist": [
     "> 1%"
@@ -36,9 +36,13 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
+    "config": "^1.28.1",
+    "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "isomorphic-fetch": "^2.2.1",
+    "keymirror": "^0.1.1",
     "koa": "^2.4.1",
+    "koa-logger": "^3.1.0",
     "koa-router": "^7.3.0",
     "koa-static": "^4.0.2",
     "prop-types": "^15.6.0",
@@ -53,8 +57,11 @@
   "scripts": {
     "serve:dev": "nodemon src/server.js --exec babel-node",
     "build:server": "babel src/server.js -d dist/",
-    "serve": "nodemon public/server.js",
-    "build:dev": "webpack --progress --env=dev",
-    "watch:dev": "webpack --progress --env=dev --watch"
+    "serve": "nodemon server/server.js",
+    "build": "webpack --progress",
+    "watch": "webpack --progress --watch",
+    "build:dev": "webpack --progress --env=development",
+    "watch:dev": "webpack --progress --env=development --watch",
+    "lint:fix": "eslint --fix src/**/*{.js,.jsx}"
   }
 }

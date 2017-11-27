@@ -22,7 +22,6 @@ export const fetchUsers = () => (dispatch) => {
             return res.json();
         })
         .then(users => {
-            //console.log('users',users);
             dispatch({
                 type: USERS_LOADED,
                 items: users

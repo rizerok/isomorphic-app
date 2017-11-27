@@ -1,4 +1,6 @@
 const merge = require('webpack-merge');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const sameRule = function(a,b){
     if(String(a.test)!==String(b.test)){//check test
@@ -55,17 +57,20 @@ const mergeConfig = {
 };
 
 module.exports = function (env) {
+    const ENV = env || process.env.NODE_ENV;
     let clientConfig;
     let serverConfig = require('./webpack/webpack.server.js');
 
-    switch(env) {
-        case 'dev': {
+    console.log(`Run ${ENV} build.`);
+
+    switch(ENV) {
+        case 'development': {
             const base = require(`./webpack/webpack.client.js`);
             const dev = require(`./webpack/webpack.dev.js`);
             clientConfig = merge(mergeConfig)(base, dev);
             break;
         }
-        case 'prod': {
+        case 'production': {
             const base = require(`./webpack/webpack.client.js`);
             const prod = require(`./webpack/webpack.prod.js`);
             clientConfig = merge(mergeConfig)(base, prod);
