@@ -1,21 +1,21 @@
-import counter from './index';
+import { reducer } from '../modules/counter';
 
 describe('reducers', () => {
     describe('counter', () => {
         it('should provide the initial state', () => {
-            expect(counter(undefined, {})).toBe(0);
+            expect(reducer(undefined, {})).toBe(0);
         });
 
-        it('should handle INCREMENT action', () => {
-            expect(counter(1, { type: 'INCREMENT' })).toBe(2);
+        it('should handle reducer/increment action', () => {
+            expect(reducer(0, { type: 'counter/increment' })).toBe(1);
         });
 
-        it('should handle DECREMENT action', () => {
-            expect(counter(1, { type: 'DECREMENT' })).toBe(0);
+        it('should handle reducer/decrement action', () => {
+            expect(reducer(1, { type: 'counter/decrement' })).toBe(0);
         });
 
         it('should ignore unknown actions', () => {
-            expect(counter(1, { type: 'unknown' })).toBe(1);
+            expect(reducer(1, { type: 'unknown' })).toBe(1);
         });
     });
 });

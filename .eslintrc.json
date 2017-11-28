@@ -23,10 +23,6 @@
                 "ignoredNodes": ["JSXElement *"]//ESLint v4.5.0
             }
         ],
-//        "linebreak-style": [
-//            "error",
-//            "unix"
-//        ],
         "quotes": [
             "error",
             "single",
@@ -42,9 +38,5 @@
         "no-useless-escape":0,
         "no-undef":0,
         "no-empty":0
-        //"react/jsx-indent-props":"error"
     }
-//    "plugins":[
-//        "react"
-//    ]
 }

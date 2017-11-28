@@ -11,6 +11,17 @@ module.exports = {
         filename:path.join('server','[name].js'),
         publicPath:'/'
     },
+    resolve:{
+        alias:{
+            root:path.resolve(),
+            public:path.resolve('public'),
+            src:path.resolve('src'),
+            components:path.resolve('src','components'),
+            styles:path.resolve('src','assets','styles'),
+            fonts:path.resolve('src','assets','fonts'),
+            img:path.resolve('src','assets','images')
+        }
+    },
     module:{
         rules:[
             {
@@ -25,7 +36,36 @@ module.exports = {
                         cacheDirectory:true
                     }
                 }
-            }
+            },
+            {
+                test:/\.scss$/,
+                exclude:path.resolve('src','assets','styles'),
+                use:[{
+                    loader: 'isomorphic-style-loader',
+                },
+                {
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap:true,
+                        modules: true,
+                        importModules:2,
+                        //https://github.com/webpack/loader-utils#interpolatename
+                        localIdentName: '[path][name][local]-[hash:base64:3]'
+                    }
+                },
+                {
+                    loader:'postcss-loader',
+                    options:{
+                        sourceMap: true
+                    }
+                },
+                {
+                    loader:'sass-loader',
+                    options:{
+
+                    }
+                }]
+            },
         ]
     },
     externals:[nodeExternals()],

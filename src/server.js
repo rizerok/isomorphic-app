@@ -3,8 +3,7 @@ import ENV, { IS_DEV } from './utils/env';
 //node
 import path from 'path';
 import fs from 'fs';
-const manifest = JSON.parse(fs.readFileSync(path.resolve('manifest.json'), 'utf8'));
-
+import qs from 'qs';
 //Koa
 import Koa from 'koa';
 import serve from 'koa-static';
@@ -15,16 +14,14 @@ import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import reducer from './reducers';
 import { renderToString } from 'react-dom/server';
 import StaticRouter from 'react-router-dom/StaticRouter';
 import { renderRoutes, matchRoutes } from 'react-router-config';
 
-import qs from 'qs';
-
+import reducer from './reducers';
 import routes from './routes';
 
-
+const manifest = JSON.parse(fs.readFileSync(path.resolve('manifest.json'), 'utf8'));
 const app = new Koa();
 const router = new Router();
 
@@ -42,22 +39,22 @@ app
 
 
 async function handleRender(ctx, next) {
-    const params = qs.parse(ctx.query);
-    const counter = parseInt(params.counter, 10) || 0;
+    // const params = qs.parse(ctx.query);
+    // const counter = parseInt(params.counter, 10) || 0;
 
-    let preloadedState = { counter };
+    let preloadedState = { /*counter*/ };
 
     const store = createStore(reducer,preloadedState, applyMiddleware(thunk));
 
     const branch = matchRoutes(routes,ctx.url);
-
+    console.log('branch',branch);
     const promises = branch.map(({route}) => {
         let fetchData = route.component.fetchData;
         return fetchData instanceof Function ? fetchData(store) : Promise.resolve(null);
     });
 
     await Promise.all(promises);
-    //console.log('store',store.getState());
+
     let context = {};
 
     let html = renderToString(
@@ -78,6 +75,7 @@ async function handleRender(ctx, next) {
         ctx.status = 301;
         ctx.redirect(context.url);
     }
+
     ctx.body = renderFullPage(html,finalState);
 }
 
@@ -86,7 +84,7 @@ function renderFullPage(html, preloadedState) {
     <!doctype html>
     <html>
       <head>
-        <title>Redux Universal Example</title>
+        <title>React isomorphic app</title>
         <link rel="stylesheet" href="${manifest['app.css']}">
       </head>
       <body>

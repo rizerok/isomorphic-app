@@ -27,7 +27,9 @@ class Counter extends Component {
         return (
             <p>
                 <Link to="/list">List!</Link>
-                Clicked: {counter} times
+                <span>
+                    Clicked: {counter} times
+                </span>
                 {' '}
                 <button onClick={onIncrement}>
                     +
@@ -50,10 +52,11 @@ class Counter extends Component {
 }
 
 // Counter.propTypes = {
-//   value: PropTypes.number.isRequired,
-//   onIncrement: PropTypes.func.isRequired,
-//   onDecrement: PropTypes.func.isRequired
+//     value: PropTypes.number.isRequired,
+//     onIncrement: PropTypes.func.isRequired,
+//     onDecrement: PropTypes.func.isRequired
 // };
+
 const mapDispatchToProps = (dispatch) =>
     bindActionCreators({onIncrement: increment, onDecrement: decrement}, dispatch);
 

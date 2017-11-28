@@ -1,11 +1,12 @@
-import App from './containers/App';
+//import App from './containers/App';
+import RootLayout from 'components/root/layout';
 import Counter from './components/counter/Counter';
 import List from './components/list';
 import NotFound from './components/notfound';
 import ListToUsers from './components/listtousers';
 
 const routes = [
-    { component: App,
+    { component: RootLayout,
         routes: [
             { path: '/',
                 exact: true,

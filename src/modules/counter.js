@@ -3,7 +3,7 @@ const initialState = 0;
 export const COUNTER_INCREMENT = 'counter/increment';
 export const COUNTER_DECREMENT = 'counter/decrement';
 
-export default function reducer(state = initialState, action){
+export function reducer(state = initialState, action){
     switch (action.type) {
         case COUNTER_INCREMENT:
             return state + 1;
@@ -20,3 +20,5 @@ export const increment = () => (dispatch) => {
 export const decrement = () => (dispatch) => {
     dispatch({ type: COUNTER_DECREMENT });
 };
+
+export default reducer;

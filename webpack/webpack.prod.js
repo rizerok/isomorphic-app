@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const WebpackChunkHash = require('webpack-chunk-hash');
 
 let extractSASS = new ExtractTextPlugin({
     filename:path.join('public','[chunkhash].css')
@@ -25,7 +26,7 @@ module.exports = {
                             importLoaders: 2,
                             minimize:true,
                             modules: true,
-                            localIdentName: '[hash:base64:8]'
+                            localIdentName: '[path][name][local]-[hash:base64:3]'
                         }
                     },
                     {
@@ -74,6 +75,7 @@ module.exports = {
     },
     devtool:'cheap-module-source-map',
     plugins:[
+        new WebpackChunkHash({algorithm: 'md5'}),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),

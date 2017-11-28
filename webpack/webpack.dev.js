@@ -27,7 +27,7 @@ module.exports = {
                             modules: true,
                             importModules:2,
                             //https://github.com/webpack/loader-utils#interpolatename
-                            localIdentName: '[name]__[local]-[hash:base64:5]'
+                            localIdentName: '[path][name][local]-[hash:base64:3]'
                         }
                     },
                     {
