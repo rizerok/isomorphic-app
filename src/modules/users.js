@@ -1,4 +1,4 @@
-import 'isomorphic-fetch';
+import api from 'utils/api';
 
 export const USERS_LOADED = '@ssr/users/loaded';
 
@@ -17,10 +17,7 @@ export default function reducer(state = initialState, action) {
 }
 
 export const fetchUsers = () => (dispatch) => {
-    return fetch('//jsonplaceholder.typicode.com/users')
-        .then(res => {
-            return res.json();
-        })
+    return api.getUsers()
         .then(users => {
             dispatch({
                 type: USERS_LOADED,

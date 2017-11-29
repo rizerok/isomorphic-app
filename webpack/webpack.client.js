@@ -27,6 +27,7 @@ module.exports = {
             public:path.resolve('public'),
             src:path.resolve('src'),
             components:path.resolve('src','components'),
+            utils:path.resolve('src','utils'),
             styles:path.resolve('src','assets','styles'),
             fonts:path.resolve('src','assets','fonts'),
             img:path.resolve('src','assets','images')
