@@ -1,6 +1,6 @@
-//import App from './containers/App';
 import RootLayout from 'components/root/layout';
-import Counter from './components/counter/Counter';
+import Home from './components/home';
+import Counter from './components/counter';
 import List from './components/list';
 import NotFound from './components/notfound';
 import ListToUsers from './components/listtousers';
@@ -10,9 +10,9 @@ const routes = [
         routes: [
             { path: '/',
                 exact: true,
-                component: Counter
+                component: Home
             },
-            { path: '/home',
+            { path: '/counter',
                 component: Counter
             },
             { path: '/list',

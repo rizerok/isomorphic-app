@@ -3,7 +3,6 @@ import ENV, { IS_DEV } from './utils/env';
 //node
 import path from 'path';
 import fs from 'fs';
-import qs from 'qs';
 //Koa
 import Koa from 'koa';
 import serve from 'koa-static';
@@ -17,9 +16,10 @@ import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import StaticRouter from 'react-router-dom/StaticRouter';
 import { renderRoutes, matchRoutes } from 'react-router-config';
-
+//src
 import reducer from './reducers';
 import routes from './routes';
+import renderBaseTemplate from './templates/base';
 
 const manifest = JSON.parse(fs.readFileSync(path.resolve('manifest.json'), 'utf8'));
 const app = new Koa();
@@ -39,15 +39,11 @@ app
 
 
 async function handleRender(ctx, next) {
-    // const params = qs.parse(ctx.query);
-    // const counter = parseInt(params.counter, 10) || 0;
-
     let preloadedState = { /*counter*/ };
 
     const store = createStore(reducer,preloadedState, applyMiddleware(thunk));
 
     const branch = matchRoutes(routes,ctx.url);
-    console.log('branch',branch);
     const promises = branch.map(({route}) => {
         let fetchData = route.component.fetchData;
         return fetchData instanceof Function ? fetchData(store) : Promise.resolve(null);
@@ -76,27 +72,7 @@ async function handleRender(ctx, next) {
         ctx.redirect(context.url);
     }
 
-    ctx.body = renderFullPage(html,finalState);
-}
-
-function renderFullPage(html, preloadedState) {
-    return `
-    <!doctype html>
-    <html>
-      <head>
-        <title>React isomorphic app</title>
-        <link rel="stylesheet" href="${manifest['app.css']}">
-      </head>
-      <body>
-        <div id="root">${html}</div>
-        <script>
-          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\\u003c')}
-        </script>
-        <script src=${manifest['vendors.js']}></script>
-        <script src=${manifest['app.js']}></script>
-      </body>
-    </html>
-    `;
+    ctx.body = renderBaseTemplate(html,finalState,manifest);
 }
 
 app.listen(SERVER_PORT, err => {

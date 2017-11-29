@@ -3,6 +3,9 @@ import { renderRoutes } from 'react-router-config';
 
 import style from './style.scss';
 
+import RootHeader from '../header';
+import RootFooter from '../footer';
+
 class RootLayout extends React.Component{
     constructor(props){
         super(props);
@@ -11,13 +14,13 @@ class RootLayout extends React.Component{
         return (
             <div className={style.container}>
                 <header className={style.header}>
-                    header
+                    <RootHeader/>
                 </header>
                 <main className={style.main}>
                     {renderRoutes(this.props.route.routes)}
                 </main>
                 <footer className={style.footer}>
-                    footer
+                    <RootFooter/>
                 </footer>
             </div>
         );
