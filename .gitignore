@@ -5,3 +5,4 @@ public
 .env
 server/**
 manifest.json
+config/**

@@ -26,7 +26,6 @@ class Counter extends Component {
         const {counter, onIncrement, onDecrement} = this.props;
         return (
             <p>
-                <Link to="/list">List!</Link>
                 <span>
                     Clicked: {counter} times
                 </span>
