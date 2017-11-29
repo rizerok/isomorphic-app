@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom';
 const NotFound = () => {
     return (
         <Route render={({ staticContext }) => {
-            console.log('staticContext',staticContext);
             if (staticContext) {
                 staticContext.status = 404;
             }
